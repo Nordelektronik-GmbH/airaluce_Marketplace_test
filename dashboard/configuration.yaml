@@ -1,0 +1,4 @@
+homeassistant:
+  packages: !include_dir_named packages
+
+automation: !include automations.yaml

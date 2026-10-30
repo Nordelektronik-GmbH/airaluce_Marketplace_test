@@ -1,0 +1,26 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Device is already configured.",
+            "invalid_unique_id": "The device did not provide a valid unique ID."
+        },
+        "error": {
+            "cannot_connect": "Failed to connect to the device.",
+            "invalid_unique_id": "The device did not provide a valid unique ID."
+        },
+        "step": {
+            "confirm": {
+                "description": "Set up the discovered AVITANA aira luce device?",
+                "title": "AVITANA aira luce discovered"
+            },
+            "user": {
+                "data": {
+                    "host": "Host",
+                    "port": "Port"
+                },
+                "description": "Connect to your AVITANA aira luce device.",
+                "title": "AVITANA aira luce"
+            }
+        }
+    }
+}

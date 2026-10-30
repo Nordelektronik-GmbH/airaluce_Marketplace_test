@@ -1,0 +1,105 @@
+# 2026_09_09_CL: Geaendert: Separates Lovelace-Dashboard fuer die grosse AiraLuce-Variante aufgenommen.
+# Warum: Die drei Zonen sollen als eigene Bedienbereiche sichtbar sein.
+# Wirkung: Das Dashboard verwendet die input_number- und input_select-Helfer aus dem Package.
+# alt: Es gab keine gebuendelte Dashboard-Ansicht fuer diese Bedienlogik.
+title: AVITANA aira luce
+
+# 2026_09_10_CL: Geaendert: Power-Karte auf die in der laufenden HA-Entity-Registry bestaetigte Entitaet zurueckgestellt.
+# Warum: Entity-IDs duerfen nicht allein aus den Python-Klassennamen abgeleitet werden.
+# Wirkung: Der Ein/Aus-Schalter nutzt weiterhin switch.power.
+# alt: Die Karte war unbestaetigt auf switch.airaluce_power umgestellt.
+# 2026_09_09_CL: Geaendert: Farbschieber mit der Webinterface-Semantik kalt -> warm beschriftet.
+# Warum: Die Farbtemperatur soll ohne Prozentangabe und ohne numerische Thermometerdarstellung bedienbar sein.
+# Wirkung: Alle drei Farbkarten zeigen jetzt kalt -> warm als Bedienhinweis.
+# alt: Die Farbkarten trugen nur die allgemeine Beschriftung Farbe.
+# 2026_09_10_CL: Geaendert: Bereich oben als Navigation zu einer Unteransicht vorbereitet.
+# Warum: Die Detailbedienung soll schrittweise aus dem Hauptdashboard in eine eigene Ansicht verschoben werden.
+# Wirkung: Die Flaeche oben oeffnet die Unteransicht oben; die bisherigen Slider bleiben in diesem Testschritt unveraendert.
+# alt: Der Bereich oben enthielt nur direkt eingebettete Slider ohne Unteransicht.
+# 2026_10_02_CL: Geaendert: Dashboard auf native Light-/Fan-Entitaeten umgestellt.
+# Warum: Helligkeit und Warm/Kalt liegen jetzt gemeinsam auf light.airaluce; Fan ist fan.airaluce_fan.
+# Wirkung: Die Zonenkarte nutzt weiterhin eigene Top-/Bottom-Vorschauen und den Web-Farbverlauf.
+# alt: Die Karte steuerte number.brightness, number.color und number.fan.
+# 2026_10_20_CL: Geaendert: Dashboard vorerst an die bestaetigten HA-Entitaets-IDs angepasst.
+# Warum: Die bisher referenzierten Select- und Sensor-IDs sind in dieser HA-Installation nicht vorhanden.
+# Wirkung: Alle Zonen und Vorschauen verwenden die vorhandenen Entitaeten; HA-Entitaeten werden nicht umbenannt.
+# alt: select.airaluce_zone -> select.zone; sensor.airaluce_brightness_top -> sensor.brightness_top;
+#      sensor.airaluce_brightness_bottom -> sensor.brightness_bottom; sensor.airaluce_color_top -> sensor.color_top;
+#      sensor.airaluce_color_bottom -> sensor.color_bottom.
+# Rueckaenderung: Alte IDs oben bleiben dokumentiert, falls spaeter die HA-Entitaeten einheitlich umbenannt werden.
+views:
+  - title: AVITANA aira luce
+    path: airaluce
+    icon: mdi:ceiling-light
+    cards:
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: custom:airaluce-zone-control
+                title: oben
+                zone: Top
+                compact: true
+                navigation_path: /airaluce-dashboard/steuerung
+                zone_entity: select.zone
+                light_entity: light.airaluce
+                preview_brightness_entity: sensor.brightness_top
+                preview_color_entity: sensor.color_top
+
+          - type: vertical-stack
+            cards:
+              - type: custom:airaluce-zone-control
+                title: unten
+                zone: Bottom
+                compact: true
+                navigation_path: /airaluce-dashboard/steuerung
+                zone_entity: select.zone
+                light_entity: light.airaluce
+                preview_brightness_entity: sensor.brightness_bottom
+                preview_color_entity: sensor.color_bottom
+
+          - type: vertical-stack
+            cards:
+              - type: custom:airaluce-zone-control
+                title: oben + unten
+                zone: Top+Bottom
+                compact: true
+                navigation_path: /airaluce-dashboard/steuerung
+                zone_entity: select.zone
+                light_entity: light.airaluce
+                preview_brightness_entity: sensor.brightness_bottom
+                preview_color_entity: sensor.color_bottom
+
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Lüfter
+            show_header_toggle: false
+            entities:
+              - entity: fan.airaluce_fan
+                name: Geschwindigkeit
+                icon: mdi:fan
+
+          - type: entities
+            title: Gerät
+            show_header_toggle: false
+            entities:
+              - entity: switch.power
+                name: Ein/Aus
+                icon: mdi:power
+
+  - title: Steuerung
+    path: steuerung
+    subview: true
+    cards:
+      - type: custom:airaluce-zone-control
+        zone_entity: select.zone
+        light_entity: light.airaluce
+        # 2026_10_22_CL: Geaendert: Farbsensoren fuer die Detailanzeige bei ausgeschaltetem Licht zuordnen.
+        # Warum: Die Light-Entitaet veroeffentlicht bei off keine Farbtemperatur.
+        # Wirkung: Nur die Farbposition bei off folgt oben bzw. unten; beide verwendet unten.
+        # alt: Ohne Sensorzuordnung sprang die Farbe bei off auf warm.
+        color_top_entity: sensor.color_top
+        color_bottom_entity: sensor.color_bottom

@@ -1,0 +1,18 @@
+{
+  "domain": "airaluce",
+  "name": "AVITANA aira luce",
+  "version": "0.1.0",
+  "documentation": "https://github.com/Nordelektronik-GmbH/airaluce_Marketplace_test",
+  "issue_tracker": "https://github.com/Nordelektronik-GmbH/airaluce_Marketplace_test/issues",
+  "config_flow": true,
+  "zeroconf": [
+    {
+      "type": "_airaluce._tcp.local.",
+      "name": "airaluce*"
+    }
+  ],
+  "iot_class": "local_polling",
+  "codeowners": [
+    "@airaluce"
+  ]
+}

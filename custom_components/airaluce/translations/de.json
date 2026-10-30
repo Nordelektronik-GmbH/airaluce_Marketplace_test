@@ -1,0 +1,26 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "AVITANA aira luce",
+        "description": "Mit dem Gerät AVITANA aira luce verbinden.",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        }
+      },
+      "confirm": {
+        "title": "AVITANA aira luce gefunden",
+        "description": "Gefundenes Gerät AVITANA aira luce einrichten?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum Gerät fehlgeschlagen.",
+      "invalid_unique_id": "Das Gerät hat keine gültige Geräte-ID bereitgestellt."
+    },
+    "abort": {
+      "already_configured": "Gerät ist bereits eingerichtet.",
+      "invalid_unique_id": "Das Gerät hat keine gültige Geräte-ID bereitgestellt."
+    }
+  }
+}

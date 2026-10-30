@@ -1,0 +1,43 @@
+# 2026_09_09_CL: Geaendert: HA-Package mit Helfern und Dashboard-Registrierung aufgenommen.
+# Warum: Dashboard-Helfer, Lovelace-Definition und PlatformIO-Anbindung sollen gemeinsam installiert werden.
+# Wirkung: Das Dashboard wird als airaluce-dashboard registriert und die benoetigten Helfer werden angelegt.
+# alt: Es gab keine gemeinsame Package-Datei fuer dieses separate Dashboard.
+lovelace:
+  resource_mode: yaml
+  # 2026_09_12_CL: Geaendert: JavaScript-Ressource fuer die direkte Zonen-Steuerkarte registriert.
+  # Warum: Das Dashboard benoetigt die Custom-Lovelace-Karte fuer den Farbverlauf und die gemeinsame Zonenbedienung.
+  # Wirkung: Home Assistant laedt /local/airaluce-zone-control.js als JavaScript-Modul.
+  # alt: Das Dashboard verwendete nur Standardkarten und indirekte Helfer-Automationen.
+  resources:
+    #- url: /local/airaluce-zone-control.js
+    # 2026_10_04_CL: Geaendert: Cache-Version fuer den erweiterten Kelvin-Farbverlauf erhoeht.
+    # Warum: Browser sollen die angepasste 4000-9000-K-Abbildung neu laden.
+    # Wirkung: Custom-Karte und native Light-Entitaet verwenden denselben Kelvin-Bereich.
+    # alt: Der Ressourcen-Link verwendete noch Vers31.
+    # 2026_10_13_CL: Geaendert: Ressourcen-Version fuer die korrigierte Light-/Zonenkarte auf Vers42 erhoeht.
+    # Warum: Browser sollen die Fehlerkorrekturen laden statt die bisherige JavaScript-Datei aus dem Cache.
+    # Wirkung: Light-Attribute, Slider-Sperre und einfache Klickbehandlung werden nach Neuladen verwendet.
+    # alt: Der Ressourcen-Link verwendete Vers41.
+    # 2026_10_21_CL: Geaendert: Cache-Version fuer verzoegerte Slider-Bestaetigungen auf Vers45 erhoeht.
+    # Warum: Die Browser muessen die neue Sollwert-Ueberbrueckung nach Serviceabschluss laden.
+    # Wirkung: Alte Light-Rueckmeldungen lassen den losgelassenen Regler nicht mehr kurz zurueckspringen.
+    # alt: Vers44a sperrte das Rendern nur waehrend Eingabe und Serviceaufruf.
+    # 2026_10_22_CL: Geaendert: Karten-Anzeigename vereinheitlicht und Cache-Version erhoeht.
+    # Warum: Browser sollen die neue Produktbeschriftung laden.
+    # Wirkung: Karten-Auswahl und Sidebar zeigen AVITANA aira luce; Ressourcenpfad bleibt gleich.
+    # alt: Kartenname AiraLuce, Cache-Version 20261021-Vers45.
+    # 2026_10_22_CL: Geaendert: Cache-Version fuer den Farberhalt bei ausgeschaltetem Licht erhoeht.
+    # Warum: Browser sollen die korrigierte Farbwertquelle der Detailkarte laden.
+    # Wirkung: Bei off wird der Zonensensor statt der warmen Ersatzposition verwendet.
+    # alt: 20261022-Vers46 verwendete bei fehlenden Kelvin 4000 K.
+    - url: /local/airaluce-zone-control.js?v=20261022-Vers47
+      type: module
+  dashboards:
+    airaluce-dashboard:
+      mode: yaml
+      filename: airaluce.yaml
+      title: AVITANA aira luce
+      icon: mdi:ceiling-light
+      show_in_sidebar: true
+
+
