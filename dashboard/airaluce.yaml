@@ -27,6 +27,10 @@ title: AVITANA aira luce
 #      sensor.airaluce_brightness_bottom -> sensor.brightness_bottom; sensor.airaluce_color_top -> sensor.color_top;
 #      sensor.airaluce_color_bottom -> sensor.color_bottom.
 # Rueckaenderung: Alte IDs oben bleiben dokumentiert, falls spaeter die HA-Entitaeten einheitlich umbenannt werden.
+# 2026_11_12_CL: Geaendert: Dashboard-Referenzen an die Entity-IDs aus Screenshot 2 angepasst.
+# Warum: Die aktive HA-Entity-Registry verwendet das Geraete-Praefix avitana_aira_luce.
+# Wirkung: Zonenkarte, Vorschauen, Luefter und Hauptschalter verweisen auf vorhandene Entitaeten.
+# alt: Generische IDs wie select.zone, light.airaluce, fan.airaluce_fan und switch.power.
 views:
   - title: AVITANA aira luce
     path: airaluce
@@ -43,10 +47,10 @@ views:
                 zone: Top
                 compact: true
                 navigation_path: /airaluce-dashboard/steuerung
-                zone_entity: select.zone
-                light_entity: light.airaluce
-                preview_brightness_entity: sensor.brightness_top
-                preview_color_entity: sensor.color_top
+                zone_entity: select.avitana_aira_luce_zone
+                light_entity: light.avitana_aira_luce
+                preview_brightness_entity: sensor.avitana_aira_luce_brightness_top
+                preview_color_entity: sensor.avitana_aira_luce_color_top
 
           - type: vertical-stack
             cards:
@@ -55,10 +59,10 @@ views:
                 zone: Bottom
                 compact: true
                 navigation_path: /airaluce-dashboard/steuerung
-                zone_entity: select.zone
-                light_entity: light.airaluce
-                preview_brightness_entity: sensor.brightness_bottom
-                preview_color_entity: sensor.color_bottom
+                zone_entity: select.avitana_aira_luce_zone
+                light_entity: light.avitana_aira_luce
+                preview_brightness_entity: sensor.avitana_aira_luce_brightness_bottom
+                preview_color_entity: sensor.avitana_aira_luce_color_bottom
 
           - type: vertical-stack
             cards:
@@ -67,10 +71,10 @@ views:
                 zone: Top+Bottom
                 compact: true
                 navigation_path: /airaluce-dashboard/steuerung
-                zone_entity: select.zone
-                light_entity: light.airaluce
-                preview_brightness_entity: sensor.brightness_bottom
-                preview_color_entity: sensor.color_bottom
+                zone_entity: select.avitana_aira_luce_zone
+                light_entity: light.avitana_aira_luce
+                preview_brightness_entity: sensor.avitana_aira_luce_brightness_bottom
+                preview_color_entity: sensor.avitana_aira_luce_color_bottom
 
       - type: vertical-stack
         cards:
@@ -78,7 +82,7 @@ views:
             title: Lüfter
             show_header_toggle: false
             entities:
-              - entity: fan.airaluce_fan
+              - entity: fan.avitana_aira_luce_fan
                 name: Geschwindigkeit
                 icon: mdi:fan
 
@@ -86,7 +90,7 @@ views:
             title: Gerät
             show_header_toggle: false
             entities:
-              - entity: switch.power
+              - entity: switch.avitana_aira_luce_power
                 name: Ein/Aus
                 icon: mdi:power
 
@@ -95,11 +99,11 @@ views:
     subview: true
     cards:
       - type: custom:airaluce-zone-control
-        zone_entity: select.zone
-        light_entity: light.airaluce
+        zone_entity: select.avitana_aira_luce_zone
+        light_entity: light.avitana_aira_luce
         # 2026_10_22_CL: Geaendert: Farbsensoren fuer die Detailanzeige bei ausgeschaltetem Licht zuordnen.
         # Warum: Die Light-Entitaet veroeffentlicht bei off keine Farbtemperatur.
         # Wirkung: Nur die Farbposition bei off folgt oben bzw. unten; beide verwendet unten.
         # alt: Ohne Sensorzuordnung sprang die Farbe bei off auf warm.
-        color_top_entity: sensor.color_top
-        color_bottom_entity: sensor.color_bottom
+        color_top_entity: sensor.avitana_aira_luce_color_top
+        color_bottom_entity: sensor.avitana_aira_luce_color_bottom

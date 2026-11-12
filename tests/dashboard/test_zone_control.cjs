@@ -277,8 +277,10 @@ test("dashboard YAML uses the confirmed HA IDs and zone preview sources", () => 
   assert.equal(parsed.status, 0, parsed.error?.message || parsed.stderr);
   const dashboard = JSON.parse(parsed.stdout);
   const knownEntities = new Set([
-    "select.zone", "light.airaluce", "fan.airaluce_fan", "switch.power",
-    "sensor.brightness_top", "sensor.brightness_bottom", "sensor.color_top", "sensor.color_bottom",
+    "select.avitana_aira_luce_zone", "light.avitana_aira_luce",
+    "fan.avitana_aira_luce_fan", "switch.avitana_aira_luce_power",
+    "sensor.avitana_aira_luce_brightness_top", "sensor.avitana_aira_luce_brightness_bottom",
+    "sensor.avitana_aira_luce_color_top", "sensor.avitana_aira_luce_color_bottom",
   ]);
   const cards = [];
   const references = [];
@@ -298,16 +300,22 @@ test("dashboard YAML uses the confirmed HA IDs and zone preview sources", () => 
   for (const entity of references) assert.ok(knownEntities.has(entity), `Unbekannte Entity-ID: ${entity}`);
   assert.equal(cards.length, 4);
   for (const card of cards) {
-    assert.equal(card.zone_entity, "select.zone");
-    assert.equal(card.light_entity, "light.airaluce");
+    assert.equal(card.zone_entity, "select.avitana_aira_luce_zone");
+    assert.equal(card.light_entity, "light.avitana_aira_luce");
   }
   assert.deepEqual(cards.map((card) => card.zone), ["Top", "Bottom", "Top+Bottom", undefined]);
   assert.deepEqual(cards.map((card) => card.preview_brightness_entity), [
-    "sensor.brightness_top", "sensor.brightness_bottom", "sensor.brightness_bottom", undefined,
+    "sensor.avitana_aira_luce_brightness_top",
+    "sensor.avitana_aira_luce_brightness_bottom",
+    "sensor.avitana_aira_luce_brightness_bottom",
+    undefined,
   ]);
   assert.deepEqual(cards.map((card) => card.preview_color_entity), [
-    "sensor.color_top", "sensor.color_bottom", "sensor.color_bottom", undefined,
+    "sensor.avitana_aira_luce_color_top",
+    "sensor.avitana_aira_luce_color_bottom",
+    "sensor.avitana_aira_luce_color_bottom",
+    undefined,
   ]);
-  assert.equal(cards[3].color_top_entity, "sensor.color_top");
-  assert.equal(cards[3].color_bottom_entity, "sensor.color_bottom");
+  assert.equal(cards[3].color_top_entity, "sensor.avitana_aira_luce_color_top");
+  assert.equal(cards[3].color_bottom_entity, "sensor.avitana_aira_luce_color_bottom");
 });
